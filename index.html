@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Be my valentine?</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: rgb(76, 151, 194);
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        h1 {
+            color: red;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .center-screen {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+        .buttons {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        #yes {
+            background-color: rgb(100, 61, 136);
+            color: white;
+            font-weight: bold;
+            border-radius: 1em;
+            outline: none;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        #no {
+            background-color: rgb(255, 4, 4);
+            position: relative;
+            color: white;
+            font-weight: bold;
+            border-radius: 1em;
+            outline: none;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        .gif-container {
+            display: none;
+            margin: 20px 0;
+            text-align: center;
+        }
+        .gif-container img {
+            width: 300px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .date-ideas {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .date-options {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+        .date-option {
+            background-color: white;
+            padding: 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            text-align: center;
+            width: 300px;
+        }
+        .popup button {
+            background-color: rgb(100, 61, 136);
+            color: white;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        
+        .popup-valorant {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            text-align: center;
+            width: 300px;
+        }
+
+        .popup-valorant button {
+            background-color: rgb(100, 61, 136);
+            color: white;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="center-screen" id="initialScreen">
+        <h1 id="question">Will you be my Valentine? ❤️</h1>
+        <div class="buttons">
+            <button id="yes" onclick="yesClicked()">Yes</button>
+            <button id="no" onmouseover="moveNoButton()" onclick="noClicked()">No</button>
+        </div>
+    </div>
+
+    <h1 class="top-message" id="topMessage" style="display:none;">Great choice 🙄🙄💙</h1>
+    <div class="gif-container" id="gifContainer">
+        <img src="https://media1.tenor.com/m/_hUq1BSUsiMAAAAd/cat-cute.gif" alt="Happy GIF">
+    </div>
+    <div class="date-ideas" id="dateIdeas">
+        <h2>Choose some of these date ideas! 😁🥰 (ik im not creative😒)</h2>
+        <div class="date-options" id="dateOptions">
+            <div class="date-option" onclick="selectDate('quiz.html')">Game night and Drawing 🎮 & 🎨</div>
+            <div class="date-option" onclick="selectDate('movie-night.html')">Movie night 🎬</div>
+            <div class="date-option" onclick="selectDate('just-dance.html')">Just Dance 💃🕺</div>
+            <div class="date-option" onclick="selectDate('valorant.html')" id="valorantOption">Valorant (EWWWW) 🤮</div>
+            <div class="date-option" onclick="selectDate('staring.html')">Just Stare at Each Other 🥰😇</div>
+        </div>
+    </div>
+
+    
+    <div class="popup" id="popup">
+        <p>Nice choice!❤️</p>
+        <button id="continueButton" onclick="closePopup()">Continue</button>
+    </div>
+
+    
+    <div class="popup-valorant" id="popupValorant">
+        <p>Are you serious? 🤨</p>
+        <button id="okayButton" onclick="closeValorantPopup()">Okay</button>
+    </div>
+
+    <script>
+        function yesClicked() {
+            document.getElementById("initialScreen").style.display = "none";
+
+           
+            document.getElementById("topMessage").style.display = "block";
+
+            
+            document.getElementById("gifContainer").style.display = "block";
+
+            
+            document.getElementById("dateIdeas").style.display = "block";
+        }
+
+        function moveNoButton() {
+            let noButton = document.getElementById("no");
+            let maxX = window.innerWidth - noButton.clientWidth - 20;
+            let maxY = window.innerHeight - noButton.clientHeight - 20;
+            let randomX = Math.random() * maxX;
+            let randomY = Math.random() * maxY;
+
+            noButton.style.transform = `translate(${randomX * 0.2}px, ${randomY * 0.2}px)`; 
+        }
+
+        function noClicked() {
+            window.location.href = "option_no.html";
+        }
+
+        function selectDate(page) {
+            if (page === 'valorant.html') {
+                showValorantPopup(); 
+            } else {
+                showPopup(); 
+                document.getElementById("continueButton").innerText = "Continue"; 
+                setTimeout(() => {
+                    window.location.href = page; 
+                }, 5000); 
+            }
+        }
+
+        function showPopup() {
+            document.getElementById("popup").style.display = "block"; 
+            document.getElementById("continueButton").innerText = "Continue"; 
+        }
+
+        function closePopup() {
+            document.getElementById("popup").style.display = "none"; 
+            window.location.href = "iloveyou.html"; 
+        }
+
+        function showValorantPopup() {
+            document.getElementById("popupValorant").style.display = "block"; 
+            document.getElementById("valorantOption").style.display = "none"; 
+        }
+
+        function closeValorantPopup() {
+            document.getElementById("popupValorant").style.display = "none"; 
+            
+        }
+    </script>
+</body>
+</html>
